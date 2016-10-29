@@ -1,5 +1,7 @@
 import network_configuration
 import socket
+import udp_network
+
 
 class Network:
     # configuration for the network module
