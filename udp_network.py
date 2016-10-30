@@ -1,4 +1,5 @@
 import socket
+from models import Packet
 
 class UDP_network:
     def create_server(self, port):
@@ -11,12 +12,14 @@ class UDP_network:
         return socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 
-    # TODO add functions and model packet
+    
     def get_packet(self, socket):
         data_bytes = socket.recv(1024)
-        input_stream = data_bytes.decode('utf-8')
-        return input_stream
+        return data_bytes
 
-    def send_packet(selfself, socket, packet):
-        pass
+    def send_packet(self, socket, packet, destination_adress='', destination_port=0):
+        if destination_adress != '':
+            socket.sendto(packet, (destination_adress, destination_port))
+        else:
+            socket.sendto(packet, (packet.get_destination_adress, packet.get_destination_port))
 
