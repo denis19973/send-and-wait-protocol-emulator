@@ -13,6 +13,18 @@ class Packet():
     source_address = ''
     source_port = 0
 
+    def __init__(self):
+        self.packet_type = 3
+        self.seq_num = 0
+        self.window_size = 0
+        self.ack_num = 0
+        self.data = ''
+        self.destination_adress = ''
+        self.destination_port = ''
+        self.source_adress = ''
+        self.source_port = ''
+
+
     def get_packet_type(self):
         return packet_type
 
@@ -71,6 +83,6 @@ class Packet():
         info_string = '''Packet [packet type={}, seq num={},
          window size={}, ack num={}, data={},
         destination adress={}, destination port={},
-        source address={}, source port={}]'''.format(packet_type, seq_num, window_size, ack_num, data, \
-                                                     destination_adress, destination_port, source_adress, source_port)
+        source address={}, source port={}]'''.format(self.packet_type, self.seq_num, self.window_size, self.ack_num, self.data, \
+                                                     self.destination_adress, self.destination_port, self.source_address, self.source_port)
         return info_string
