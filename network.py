@@ -18,15 +18,17 @@ class Network:
         total_packets_forwarded = 0
 
         sock = UDP_network.create_server(self.configuration.network_port)
-        print('server running...')
-        while running_network:
-            print('server running...')
-            packet = UDP_network.get_packet(sock)
-            total_packets += 1
 
-            if packet.get_packet_type() == 1 or packet.get_packet_type() == 4:
-                UDP_network.send_packet(socket, packet)
-                total_packets_forwarded += 1
+        print('server running...')
+        try:
+            while running_network:
+                packet = UDP_network.get_packet(sock)
+                print(packet)
+                total_packets += 1
+                print('Total packets: {}'.format(total_packets))
+
+        except KeyboardInterrupt:
+            print('server stoped.')
 
     def print_configuration(self):
         print(
