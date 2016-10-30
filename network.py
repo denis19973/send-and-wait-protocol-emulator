@@ -27,6 +27,7 @@ class Network:
                 total_packets += 1
                 print('Total packets: {}'.format(total_packets))
 
+                
         except KeyboardInterrupt:
             print('server stoped.')
 

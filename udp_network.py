@@ -4,7 +4,7 @@ from models import Packet
 
 
 class UDP_network:
-    def create_server(self, port=8888):
+    def create_server(port=8888):
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         sock.bind(('', port))
         return sock
