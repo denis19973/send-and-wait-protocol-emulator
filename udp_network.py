@@ -1,19 +1,15 @@
 import socket
+
 from models import Packet
 
+
 class UDP_network:
-    def create_server(self, port):
+    def create_server(self, port=8888):
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        sock.bind('', port)
-        sock.listen(10)
+        sock.bind(('', port))
         return sock
 
-    def create_socket(self):
-        return socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-
-
-    
-    def get_packet(self, socket):
+    def get_packet(socket):
         data_bytes = socket.recv(1024)
         return data_bytes
 
