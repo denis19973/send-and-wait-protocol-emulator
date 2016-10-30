@@ -4,8 +4,9 @@ receiverPort = 7000
 senderAddress = '127.0.0.1'
 senderPort = 8000
 dropRate = 25
-averageDelayPerPacket = 10
+average_per_packet = 10
 network_port = 8888
+
 
 # TODO remove hard code
 

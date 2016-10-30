@@ -1,7 +1,8 @@
 import socket
 import pickle
-
+import random
 import network_configuration
+import time
 from udp_network import *
 
 
@@ -28,8 +29,25 @@ class Network:
                 total_packets += 1
                 print('Total packets: {}'.format(total_packets))
 
+                if packet.get_packet_type() == 1 or packet.get_packet_type() == 4:
+                    UDP_network.send_packet(sock, packet)
+                    total_packets_forwarded += 1
+
+                else:
+                    if self.get_drop_rate_threshold() <= self.configuration.drop_rate:
+                        total_packets_dropped += 1
+                    else:
+                        time.sleep(self.configuration.average_per_packet)
+                        UDP_network.send_packet(sock, packet)
+                        total_packets_forwarded += 1
+
+
         except KeyboardInterrupt:
             print('server stoped.')
+
+    def get_drop_rate_threshold(self):
+        thresold = random.randint(0, ((100 - 1) + 1) + 1)
+        return thresold
 
     def print_configuration(self):
         print(
