@@ -4,10 +4,13 @@ from models import Packet
 
 
 class UDP_network:
-    def create_server(port=8888):
+    def create_server(port=8555):
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         sock.bind(('', port))
         return sock
+
+    def create_socket():
+        return socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 
     def get_packet(socket):
@@ -17,7 +20,7 @@ class UDP_network:
 
     def send_packet(socket, packet, destination_address='', destination_port=7777):
 
-        print(destination_address)
+        print(destination_address, destination_port)
         if destination_address != '':
             packet.set_destination_address(destination_address)
             packet.set_destination_port(destination_port)

@@ -68,13 +68,15 @@ class Packet():
         self.destination_port = destination_port
 
     def get_source_address(self):
-        return self.source_adress
+        return self.source_address
 
-    def set_source_adress(self, source_adress):
-        self.source_address = source_adress
+    def set_source_address(self, source_address):
+        self.source_address = source_address
 
     def get_source_port(self):
         return self.source_port
+
+
 
     def set_source_port(self, source_port):
         self.source_port = source_port
@@ -86,3 +88,30 @@ class Packet():
         source address={}, source port={}]'''.format(self.packet_type, self.seq_num, self.window_size, self.ack_num, self.data, \
                                                      self.destination_adress, self.destination_port, self.source_address, self.source_port)
         return info_string
+
+
+class Packet_Utilities():
+
+    def make_packet(destination_adress, destination_port, source_adress, source_port, packet_type, \
+                    seq_num, ack_num, window_size):
+        packet = Packet()
+
+        if packet_type == 1:
+            packet.set_data('SOT')
+        elif packet_type == 2:
+            packet.set_data('packet number: {}'.format(seq_num))
+        elif packet_type == 3:
+            packet.set_data('ack num {}'.format(ack_num))
+        elif packet_type == 4:
+            packet.set_data('EOT')
+
+        packet.set_destination_address(destination_adress)
+        packet.set_destination_port(destination_port)
+        packet.set_source_address(source_adress)
+        packet.set_source_port(source_port)
+        packet.set_packet_type(packet_type)
+        packet.set_seq_num(seq_num)
+        packet.set_ack_num(ack_num)
+        packet.set_window_size(window_size)
+
+        return packet

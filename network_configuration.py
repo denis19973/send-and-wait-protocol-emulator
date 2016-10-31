@@ -1,10 +1,11 @@
 # Configuration File for the Network Module.
-receiverAddress = '127.0.0.1'
-receiverPort = 7000
-senderAddress = '127.0.0.1'
-senderPort = 8000
-dropRate = 25
+receiver_address = ''
+receiver_port = 7000
+sender_address = ''
+sender_port = 8000
+drop_rate = 25
 average_per_packet = 10
+network_address = ''
 network_port = 8888
 
 
@@ -12,5 +13,5 @@ network_port = 8888
 
 drop_rate = 14
 avarage_per_packet = 5
-sender = '12:23:123'
-receiver = '11:11:45:12'
+sender = ''
+receiver = ''
