@@ -11,7 +11,7 @@ class Receiver(Client):
 
 
     def run(self):
-        self.initializate_udp_server(self.client_configuration)
+        self.initialize_udp_server(client_configuration.receiver_port)
         self.wait_for_sot()
 
         keep_receiving = True
@@ -39,7 +39,7 @@ class Receiver(Client):
                 self.asked_packets.append(packet)
                 break
 
-    def ind_if_packed_acked(self, seq_num):
+    def find_if_packed_acked(self, seq_num):
         for i in range(0, len(self.asked_packets)):
             if self.asked_packets[i].get_seq_num() == seq_num:
                 return  True
@@ -61,6 +61,8 @@ class Receiver(Client):
                                             client_configuration.receiver_address, client_configuration.receiver_port, \
                                             packet_type, self.current_seq_num, self.current_seq_num, \
                                             client_configuration.window_size)
+
+
 
 
 

@@ -135,11 +135,6 @@ class Sender(Client):
 
 
 
-a = Sender(2)
-pack = models.Packet()
-
-a.run()
-
 
 
 
