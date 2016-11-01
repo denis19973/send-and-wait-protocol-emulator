@@ -2,6 +2,7 @@ from udp_network import *
 from abc import ABCMeta, abstractmethod
 import models
 import client_configuration
+import time
 
 
 class Client(metaclass=ABCMeta):
@@ -57,7 +58,7 @@ class Sender(Client):
 
         while self.packets_sent < client_configuration.max_packets_to_sent:
             self.generate_window_and_send()
-            self.waiting_for_acks = true
+            self.waiting_for_acks = True
             self.set_time_for_acks()
 
             while len(self.packet_window) != 0:
@@ -99,10 +100,45 @@ class Sender(Client):
             self.send_packet(packet)
             self.seq_num += 1
 
+    def ack_timeout(self):
+        self.stop_timer_and_receive()
+        if len(self.packet_window) != 0:
+            self.waiting_for_acks = True
+            for i in range(1, len(self.packet_window)):
+                packet = self.packet_window[i]
+                self.send_packet(packet)
+
+            self.set_timer_for_acks()
+
+    def set_timer_for_acks(self):
+        self.timer = True
+        while self.timer:
+            self.ack_timeout()
+            time.sleep(client_configuration.max_timeout)
+
+    def receive_acks(self):
+        self.listen.settimeout(2)
+        while len(self.packet_window) != 0 and self.waiting_for_acks:
+            packet = UDP_network.get_packet(self.listen)
+
+            if packet.get_packet_type() == 3:
+                self.remove_packet_from_window(packet.get_ack_num())
+
+    def remove_packet_from_window(self, ack_num):
+        for i in range(0, len(self.packet_window)):
+            if self.packet_window[i].get_ack_num == ack_num:
+                self.packet_window.pop(i)
+
+    def stop_timer_and_receive(self):
+        self.timer = False
+        self.waiting_for_acks = False
+
+
+
 a = Sender(2)
 pack = models.Packet()
 
-a.generate_window_and_sent()
+a.run()
 
 
 
