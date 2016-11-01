@@ -1,8 +1,9 @@
-import socket
 import pickle
 import random
-import network_configuration
+import socket
 import time
+
+import network_configuration
 from udp_network import *
 
 
@@ -53,5 +54,8 @@ class Network:
         print(
             'Drop rate: {}, Avarage Delay per Packet: {}, Sender: {}, Receiver: {}'.format(self.configuration.drop_rate, \
                                                                                            self.configuration.avarage_per_packet, \
-                                                                                           self.configuration.sender, \
-                                                                                           self.configuration.receiver))
+                                                                                           (
+                                                                                           self.configuration.sender_address,
+                                                                                           self.configuration.sender_port), \
+                                                                                           (
+                                                                                           self.configuration.receiver_address.self.configuration.receiver_port)))

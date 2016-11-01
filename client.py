@@ -1,8 +1,9 @@
-from udp_network import *
-from abc import ABCMeta, abstractmethod
-import models
-import client_configuration
 import time
+from abc import ABCMeta, abstractmethod
+
+import client_configuration
+import models
+from udp_network import *
 
 
 class Client(metaclass=ABCMeta):
@@ -26,7 +27,7 @@ class Client(metaclass=ABCMeta):
         UDP_network.send_packet(socket, packet, client_configuration.network_address, client_configuration.network_port)
 
     def set_configuration(self, network_address, network_port, transmitter_address, transmitter_port, \
-                                  receiver_address, receiver_port, max_packet_to_send, window_size, max_timeout):
+                          receiver_address, receiver_port, max_packet_to_send, window_size, max_timeout):
         client_configuration.network_address = network_address
         client_configuration.network_port = network_port
         client_configuration.transmitter_adress = transmitter_address
@@ -40,9 +41,6 @@ class Client(metaclass=ABCMeta):
     def print_configuration(self):
         print('Mode: {}, Network Emulator Address: {} : {}'.format(self.mode, client_configuration.network_address, \
                                                                    client_configuration.network_port))
-
-
-    # TODO add take input method
 
 
 class Sender(Client):
@@ -68,7 +66,6 @@ class Sender(Client):
 
             self.packets_sent += client_configuration.window_size
             print('Sent packets {}'.format(self.packets_sent))
-
 
         self.send_of_transmission_packet()
 
@@ -132,13 +129,3 @@ class Sender(Client):
     def stop_timer_and_receive(self):
         self.timer = False
         self.waiting_for_acks = False
-
-
-
-
-
-
-
-
-
-

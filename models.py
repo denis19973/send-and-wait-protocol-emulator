@@ -24,7 +24,6 @@ class Packet():
         self.source_adress = ''
         self.source_port = ''
 
-
     def get_packet_type(self):
         return self.packet_type
 
@@ -76,8 +75,6 @@ class Packet():
     def get_source_port(self):
         return self.source_port
 
-
-
     def set_source_port(self, source_port):
         self.source_port = source_port
 
@@ -85,13 +82,14 @@ class Packet():
         info_string = '''Packet [packet type={}, seq num={},
          window size={}, ack num={}, data={},
         destination adress={}, destination port={},
-        source address={}, source port={}]'''.format(self.packet_type, self.seq_num, self.window_size, self.ack_num, self.data, \
-                                                     self.destination_adress, self.destination_port, self.source_address, self.source_port)
+        source address={}, source port={}]'''.format(self.packet_type, self.seq_num, self.window_size, self.ack_num,
+                                                     self.data, \
+                                                     self.destination_adress, self.destination_port,
+                                                     self.source_address, self.source_port)
         return info_string
 
 
 class Packet_Utilities():
-
     def make_packet(destination_adress, destination_port, source_adress, source_port, packet_type, \
                     seq_num, ack_num, window_size):
         packet = Packet()

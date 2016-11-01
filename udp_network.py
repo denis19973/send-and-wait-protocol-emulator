@@ -1,5 +1,6 @@
-import socket
 import pickle
+import socket
+
 from models import Packet
 
 
@@ -11,7 +12,6 @@ class UDP_network:
 
     def create_socket():
         return socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-
 
     def get_packet(socket):
         byte_data = socket.recv(1024)
@@ -29,4 +29,3 @@ class UDP_network:
         else:
             byte_packet = pickle.dumps(packet)
             socket.sendto(byte_packet, (packet.get_destination_address(), packet.get_destination_port()))
-

@@ -1,14 +1,14 @@
-from client import Client
 import client_configuration
-from udp_network import *
+from client import Client
 from models import *
+from udp_network import *
+
 
 class Receiver(Client):
     def __init__(self, mode):
         Client.__init__(self, mode)
         self.current_seq_num = 0
         self.asked_packets = []
-
 
     def run(self):
         self.initialize_udp_server(client_configuration.receiver_port)
@@ -42,7 +42,7 @@ class Receiver(Client):
     def find_if_packed_acked(self, seq_num):
         for i in range(0, len(self.asked_packets)):
             if self.asked_packets[i].get_seq_num() == seq_num:
-                return  True
+                return True
 
         return False
 
@@ -57,12 +57,8 @@ class Receiver(Client):
             self.wait_for_sot()
 
     def make_packet(self, packet_type):
-        return Packet_Utilities.make_packet(client_configuration.transmitter_address, client_configuration.transmitter_port, \
+        return Packet_Utilities.make_packet(client_configuration.transmitter_address,
+                                            client_configuration.transmitter_port, \
                                             client_configuration.receiver_address, client_configuration.receiver_port, \
                                             packet_type, self.current_seq_num, self.current_seq_num, \
                                             client_configuration.window_size)
-
-
-
-
-
