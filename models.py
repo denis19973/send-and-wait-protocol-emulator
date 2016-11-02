@@ -81,7 +81,7 @@ class Packet():
 
 
 class Packet_Utilities():
-    def make_packet(destination_adress, destination_port, source_adress, source_port, packet_type, \
+    def make_packet(destination_address, destination_port, source_address, source_port, packet_type, \
                     seq_num, ack_num, window_size):
         packet = Packet()
 
@@ -94,9 +94,9 @@ class Packet_Utilities():
         elif packet_type == 4:
             packet.set_data('EOT')
 
-        packet.set_destination_address(destination_adress)
+        packet.set_destination_address(destination_address)
         packet.set_destination_port(destination_port)
-        packet.set_source_address(source_adress)
+        packet.set_source_address(source_address)
         packet.set_source_port(source_port)
         packet.set_packet_type(packet_type)
         packet.set_seq_num(seq_num)

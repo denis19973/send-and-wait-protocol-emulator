@@ -92,20 +92,31 @@ class Sender(Client):
             # windowSize number of more packets have been sent
             self.packets_sent += self.configuration.window_size
             print('Sent packets {}'.format(self.packets_sent))
+            print('Ramainings packets {}'.format(self.configuration.window_size - self.packets_sent))
+        # when all window packets sent, send EOT
+        self.send_end_of_transmission()
 
-        self.send_of_transmission_packet()
-
+    # Send the packet to take control of the communication channel.
     def send_control_packet(self):
+        # create a SOT packet
         packet = self.make_packet(1)
 
+        # send the packet
         self.send_packet(packet)
 
+        # wait for SOT packet from receiver
         receiver_response = UDP_network.get_packet(self.listen)
 
-        print(receiver_response)
+        if receiver_response.get_packet_type() == 1:
+            print('packet SOT got from receiver!')
 
+
+        print(receiver_response)
+    # Send the packet to end the transmission.
     def send_end_of_transmission(self):
+        # create an EOT packet.
         packet = self.make_packet(4)
+        # send the packet
         self.send_packet(packet)
 
     def make_packet(self, packet_type):
@@ -116,15 +127,23 @@ class Sender(Client):
                                                    packet_type, self.seq_num, \
                                                    self.seq_num, self.configuration.window_size)
 
+
+    # Generate packets for a full window.
     def generate_window_and_sent(self):
         for i in range(1, self.configuration.window_size):
+            # craft a data packet
             packet = self.make_packet(2)
+            # add it to the window
             self.packet_window.append(packet)
+            # send the packet
             self.send_packet(packet)
+            # increment the sequence number
             self.seq_num += 1
 
+    # Wait for ACK's for the packets sent in the window.
     def ack_timeout(self):
         self.stop_timer_and_receive()
+        # if packet window isn't empty, send all those packets again, and wait for ack's.
         if len(self.packet_window) != 0:
             self.waiting_for_acks = True
             for i in range(1, len(self.packet_window)):
@@ -133,25 +152,38 @@ class Sender(Client):
 
             self.set_timer_for_acks()
 
+    # Set timer and wait for ACKs.
     def set_timer_for_acks(self):
         self.timer = True
         while self.timer:
+            # call ackTimeout and check which packets have been ACK'ed.
             self.ack_timeout()
             time.sleep(self.configuration.max_timeout)
 
+        self.receive_acks()
+
+    # Wait for ACKs.
     def receive_acks(self):
+
+        # can block for a maximum of 2 seconds
         self.listen.settimeout(2)
+
+        # Scan while packet window size isn't 0. If 0, all packets have been ACK'ed.
         while len(self.packet_window) != 0 and self.waiting_for_acks:
             packet = UDP_network.get_packet(self.listen)
 
+            # if an ACK received, log and remove from the window.
             if packet.get_packet_type() == 3:
                 self.remove_packet_from_window(packet.get_ack_num())
 
+    # Checks all packets in the current window and removes the one whose acknowledgement number is
+    # equal to the ACK number of the received packet.
     def remove_packet_from_window(self, ack_num):
         for i in range(0, len(self.packet_window)):
             if self.packet_window[i].get_ack_num == ack_num:
                 self.packet_window.pop(i)
 
+    # Stop the timer.
     def stop_timer_and_receive(self):
         self.timer = False
         self.waiting_for_acks = False
