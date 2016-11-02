@@ -29,19 +29,20 @@ The protocol will also have an ARQ (Automatic Repeat Request) component to it wh
 #structure of packet
     packe_type
     seq_num
-    data
-    window_size
     ack_num
+    window_size
+    data
+     
 
 ```
 
-**PacketType** field indicates the type (numeric code) of the packet, i.e., ACK or Data or EOT.
+**packe_type** field indicates the type (numeric code) of the packet, i.e., ACK or Data or EOT.
     
-**SeqNum** field is a sequence number used to number data packets.
+**seq_num** field is a sequence number used to number data packets.
     
-**AckNum** field is used to indicate the previous data packet being acknowledged and the next expected sequence number.
+**ack_num** field is used to indicate the previous data packet being acknowledged and the next expected sequence number.
     
-**WindowSize** field would typically be used at the start of the session to establish the number of packets that will be sent from the transmitter to the receiver.
+**window_size** field would typically be used at the start of the session to establish the number of packets that will be sent from the transmitter to the receiver.
 
 - The basic protocol is Send-and-Wait (Stop-and-Wait), however it's a modified version in which:
     * the sliding window is used to send multiple frames rather than single frames, 
