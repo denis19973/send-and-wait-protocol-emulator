@@ -12,7 +12,9 @@ class Receiver(Client):
 
     def run(self):
         self.initialize_udp_server(client_configuration.receiver_port)
+        print('before_sot')
         self.wait_for_sot()
+        print('after_sot')
 
         keep_receiving = True
 
@@ -21,7 +23,7 @@ class Receiver(Client):
 
         while keep_receiving:
             packet = UDP_network.get_packet(self.listen)
-
+            print(packet)
             pack_type = packet.get_packet_type()
 
             if pack_type == 4:
@@ -47,7 +49,10 @@ class Receiver(Client):
         return False
 
     def wait_for_sot(self):
+        print(self.listen)
         sot_packet = UDP_network.get_packet(self.listen)
+        print(sot_packet)
+
 
         if sot_packet.get_packet_type() == 1:
             packet = self.make_packet(1)

@@ -16,15 +16,18 @@ def create_network_module():
     network_module.run()
 
 
-if int(mode) == 1:
-    sender = Sender(1)
-    sender.print_configuration()
-    print('You are now sender!')
-    sender.run()
-elif int(mode) == 2:
-    receiver = Receiver(2)
-    receiver.print_configuration()
-    print('You are now receiver!')
-    receiver.run()
-elif int(mode) == 3:
-    create_network_module()
+try:
+    if int(mode) == 1:
+        sender = Sender(1)
+        sender.print_configuration()
+        print('You are now sender!')
+        sender.run()
+    elif int(mode) == 2:
+        receiver = Receiver(2)
+        receiver.print_configuration()
+        print('You are now receiver!')
+        receiver.run()
+    elif int(mode) == 3:
+        create_network_module()
+except KeyboardInterrupt:
+    print('server stopped.')

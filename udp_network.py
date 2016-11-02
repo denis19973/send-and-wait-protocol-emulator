@@ -5,7 +5,7 @@ from models import Packet
 
 
 class UDP_network:
-    def create_server(port=8555):
+    def create_server(port):
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         sock.bind(('', port))
         return sock
@@ -18,9 +18,9 @@ class UDP_network:
         packet = pickle.loads(byte_data)
         return packet
 
-    def send_packet(socket, packet, destination_address='', destination_port=7777):
+    def send_packet(socket, packet, destination_address='', destination_port=8888):
 
-        print(destination_address, destination_port)
+
         if destination_address != '':
             packet.set_destination_address(destination_address)
             packet.set_destination_port(destination_port)
@@ -28,4 +28,5 @@ class UDP_network:
             socket.sendto(byte_packet, (destination_address, destination_port))
         else:
             byte_packet = pickle.dumps(packet)
+            print('work from packet!!! ')
             socket.sendto(byte_packet, (packet.get_destination_address(), packet.get_destination_port()))

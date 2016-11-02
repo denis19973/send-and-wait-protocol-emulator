@@ -30,14 +30,19 @@ class Network:
                 total_packets += 1
                 print('Total packets: {}'.format(total_packets))
 
+                # if it's a control packet, let it go through.
                 if packet.get_packet_type() == 1 or packet.get_packet_type() == 4:
                     UDP_network.send_packet(sock, packet)
                     total_packets_forwarded += 1
 
                 else:
+
+                    # if packet drop rate is lower than the threshold, drop it.
                     if self.get_drop_rate_threshold() <= self.configuration.drop_rate:
                         total_packets_dropped += 1
                     else:
+
+                        # if packet drop rate is greater than the threshold, let it go through.
                         time.sleep(self.configuration.average_per_packet)
                         UDP_network.send_packet(sock, packet)
                         total_packets_forwarded += 1
@@ -53,9 +58,10 @@ class Network:
     def print_configuration(self):
         print(
             'Drop rate: {}, Avarage Delay per Packet: {}, Sender: {}, Receiver: {}'.format(self.configuration.drop_rate, \
-                                                                                           self.configuration.avarage_per_packet, \
+                                                                                           self.configuration.average_per_packet, \
                                                                                            (
-                                                                                           self.configuration.sender_address,
-                                                                                           self.configuration.sender_port), \
+                                                                                               self.configuration.sender_address,
+                                                                                               self.configuration.sender_port), \
                                                                                            (
-                                                                                           self.configuration.receiver_address.self.configuration.receiver_port)))
+                                                                                               self.configuration.receiver_address, \
+                                                                                               self.configuration.receiver_port)))

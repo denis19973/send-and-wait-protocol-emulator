@@ -23,8 +23,7 @@ class Client(metaclass=ABCMeta):
 
     def send_packet(self, packet):
         socket = UDP_network.create_socket()
-        print(socket)
-        UDP_network.send_packet(socket, packet, client_configuration.network_address, client_configuration.network_port)
+        UDP_network.send_packet(socket, packet, '', client_configuration.network_port)
 
     def set_configuration(self, network_address, network_port, transmitter_address, transmitter_port, \
                           receiver_address, receiver_port, max_packet_to_send, window_size, max_timeout):
@@ -129,3 +128,4 @@ class Sender(Client):
     def stop_timer_and_receive(self):
         self.timer = False
         self.waiting_for_acks = False
+

@@ -3,26 +3,17 @@ from pickle import *
 
 # TODO Packet must be serializable
 class Packet():
-    packet_type = 3
-    seq_num = 0
-    window_size = 0
-    ack_num = 0
-    data = ''
-    destination_address = ''
-    destination_port = 0
-    source_address = ''
-    source_port = 0
 
     def __init__(self):
-        self.packet_type = 3
+        self.packet_type = 0
         self.seq_num = 0
         self.window_size = 0
         self.ack_num = 0
-        self.data = ''
-        self.destination_adress = ''
-        self.destination_port = 7777
-        self.source_adress = ''
-        self.source_port = ''
+        self.data =''
+        self.destination_address = ''
+        self.destination_port = 0
+        self.source_address = ''
+        self.source_port = 0
 
     def get_packet_type(self):
         return self.packet_type
@@ -55,7 +46,7 @@ class Packet():
         self.data = data
 
     def get_destination_address(self):
-        return self.destination_adress
+        return self.destination_address
 
     def set_destination_address(self, destination_address):
         self.destination_address = destination_address
@@ -84,7 +75,7 @@ class Packet():
         destination adress={}, destination port={},
         source address={}, source port={}]'''.format(self.packet_type, self.seq_num, self.window_size, self.ack_num,
                                                      self.data, \
-                                                     self.destination_adress, self.destination_port,
+                                                     self.destination_address, self.destination_port,
                                                      self.source_address, self.source_port)
         return info_string
 
