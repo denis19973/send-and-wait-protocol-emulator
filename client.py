@@ -7,7 +7,6 @@ from udp_network import *
 
 class Client(metaclass=ABCMeta):
 
-
     # Constructor. Initializes the client in a mode.
     def __init__(self, mode):
         self.configuration = client_configuration
@@ -44,6 +43,7 @@ class Client(metaclass=ABCMeta):
         self.configuration.max_packet_to_send = max_packet_to_send
         self.configuration.window_size = window_size
         self.configuration.max_timeout = max_timeout
+
     # Prints all configuration for the Client.
     def print_configuration(self):
         print('Mode: {}, Network Emulator Address: {} : {}'.format(self.mode, self.configuration.network_address, \
@@ -57,26 +57,39 @@ class Client(metaclass=ABCMeta):
 
 
 class Sender(Client):
+
+    # Create a client, whose sole purpose is to send (transmit) to the receiver.
     def __init__(self, mode):
         Client.__init__(self, mode)
         self.seq_num = 1
         self.packet_window = []
 
     def run(self):
+        # initialize udp server
         self.initialize_udp_server(self.configuration.transmitter_port)
+        # take control of the channel
         self.send_control_packet()
+        # total packets sent so far
         self.packets_sent = 0
 
+        # once, all ack's arrive, empty window, and move onto the next window
         while self.packets_sent < self.configuration.max_packets_to_sent:
+            # generate packets for a window and send
             self.generate_window_and_send()
+            # we are now waiting for ack's.
             self.waiting_for_acks = True
+            # set timer and after it's over, check for ACK's.
             self.set_time_for_acks()
 
+            # wait for ack's for each packet
             while len(self.packet_window) != 0:
+                # set a timer only if we are not already waiting..no point invoking it again and again
                 if not self.waiting_for_acks:
+                    # set timer and after it's over, check for ACK's.
                     self.set_timer_for_acks()
                     print('Window status: {}'.format(len(self.packet_window)))
 
+            # windowSize number of more packets have been sent
             self.packets_sent += self.configuration.window_size
             print('Sent packets {}'.format(self.packets_sent))
 
