@@ -2,20 +2,21 @@ import pickle
 import random
 import socket
 import time
-
-import network_configuration
 from udp_network import *
 
 
 class Network:
-    # configuration for the network module
 
+    # configuration for the network module
     def __init__(self, network_configuration):
         self.configuration = network_configuration
 
+    # The main runner..where all the main Network emulation occurs!
     def run(self):
+        # run switch for the loop
         running_network = True
 
+        # stats
         total_packets = 0
         total_packets_dropped = 0
         total_packets_forwarded = 0
@@ -24,6 +25,7 @@ class Network:
 
         print('server running...')
         try:
+            # run forever - basically
             while running_network:
                 packet = UDP_network.get_packet(sock)
                 print(packet)
@@ -51,10 +53,12 @@ class Network:
         except KeyboardInterrupt:
             print('server stoped.')
 
+    # Returns a randomly calculated drop rate threshold. If the packet drop rate specified by the
+    # * user is lower than or equal to this number, it is dropped.
     def get_drop_rate_threshold(self):
         thresold = random.randint(0, ((100 - 1) + 1) + 1)
         return thresold
-
+    #  Prints all configuration for the Network Module.
     def print_configuration(self):
         print(
             'Drop rate: {}, Avarage Delay per Packet: {}, Sender: {}, Receiver: {}'.format(self.configuration.drop_rate, \
