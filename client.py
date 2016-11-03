@@ -79,7 +79,7 @@ class Sender(Client):
             # we are now waiting for ack's.
             self.waiting_for_acks = True
             # set timer and after it's over, check for ACK's.
-            self.set_time_for_acks()
+            self.set_timer_for_acks()
 
             # wait for ack's for each packet
             while len(self.packet_window) != 0:
@@ -102,6 +102,7 @@ class Sender(Client):
         packet = self.make_packet(1)
 
         # send the packet
+
         self.send_packet(packet)
 
         # wait for SOT packet from receiver
@@ -129,7 +130,7 @@ class Sender(Client):
 
 
     # Generate packets for a full window.
-    def generate_window_and_sent(self):
+    def generate_window_and_send(self):
         for i in range(1, self.configuration.window_size):
             # craft a data packet
             packet = self.make_packet(2)

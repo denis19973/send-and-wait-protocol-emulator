@@ -34,7 +34,8 @@ class Network:
 
                 # if it's a control packet, let it go through.
                 if packet.get_packet_type() == 1 or packet.get_packet_type() == 4:
-                    UDP_network.send_packet(sock, packet)
+                    print(packet.get_destination_address(), packet.get_destination_port())
+                    UDP_network.send_packet(sock, packet, packet.get_destination_address(), packet.get_destination_port())
                     total_packets_forwarded += 1
 
                 else:

@@ -8,7 +8,7 @@ class UDP_network:
     # Creates a UDP Socket that listens on a specified port.
     def create_server(port):
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        sock.bind(('', port))
+        sock.bind(('',port))
         return sock
     # # Creates a UDP Socket that listens on a specified port.
     def create_socket():
@@ -20,11 +20,8 @@ class UDP_network:
         return packet
 
     # Send a Packet from the UDP socket to destination specified inside the Packet.
-    def send_packet(socket, packet, destination_address='', destination_port=8888):
-
-        if destination_address != '':
-            packet.set_destination_address(destination_address)
-            packet.set_destination_port(destination_port)
+    def send_packet(socket, packet, destination_address=None, destination_port=None):
+        if destination_address != None:
             byte_packet = pickle.dumps(packet)
             socket.sendto(byte_packet, (destination_address, destination_port))
         else:

@@ -1,9 +1,9 @@
 # Configuration File for the Network Module.
-receiver_address = '192.168.0.1'
+receiver_address = 'localhost'
 receiver_port = 8889
-sender_address = '192.168.0.2'
+sender_address = 'localhost'
 sender_port = 8887
 drop_rate = 25
-average_per_packet = 10
-network_address = '192.168.0.3'
+average_per_packet = 3
+network_address = 'localhost'
 network_port = 8888
