@@ -1,9 +1,6 @@
 from pickle import *
 
-
-# TODO Packet must be serializable
 class Packet():
-
     def __init__(self):
         self.packet_type = 0
         self.seq_num = 0
@@ -72,7 +69,7 @@ class Packet():
     def __str__(self):
         info_string = '''Packet [packet type={}, seq num={},
          window size={}, ack num={}, data={},
-        destination adress={}, destination port={},
+        destination address={}, destination port={},
         source address={}, source port={}]'''.format(self.packet_type, self.seq_num, self.window_size, self.ack_num,
                                                      self.data, \
                                                      self.destination_address, self.destination_port,

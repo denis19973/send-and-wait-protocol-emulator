@@ -27,7 +27,7 @@ The protocol will also have an ARQ (Automatic Repeat Request) component to it wh
 
 ```python
 #structure of packet
-    packe_type
+    packet_type
     seq_num
     ack_num
     window_size
@@ -36,7 +36,7 @@ The protocol will also have an ARQ (Automatic Repeat Request) component to it wh
 
 ```
 
-**packe_type** field indicates the type (numeric code) of the packet, i.e., ACK or Data or EOT.
+**packet_type** field indicates the type (numeric code) of the packet, i.e., ACK or Data or EOT.
     
 **seq_num** field is a sequence number used to number data packets.
     
@@ -56,4 +56,3 @@ The protocol will also have an ARQ (Automatic Repeat Request) component to it wh
 
 - Network module will take arguments such as the BER (Bit Error Rate), average delay per packet, and will also have a configuration file specifying IP addresses and port numbers for the transmitter and receiver.
 
-- The test document should have screen shots validating all of the protocol characteristics (examples: successful transactions, retransmissions, timeouts etc.) that have been implemented. Maybe also add Wireshark captures!

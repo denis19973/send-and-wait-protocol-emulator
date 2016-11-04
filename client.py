@@ -153,6 +153,7 @@ class Sender(Client):
 
             self.set_timer_for_acks()
 
+    # TODO fix timer
     # Set timer and wait for ACKs.
     def set_timer_for_acks(self):
         self.timer = True
