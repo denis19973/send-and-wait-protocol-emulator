@@ -32,7 +32,7 @@ class Receiver(Client):
 
             if pack_type == 4:
                 # listen for EOT
-                print('Total packets received: {}, Total duplicate ACKs: {}'.format(total_packets, total_duplicate_acks))
+                print('Total packets received: {0}, Total duplicate ACKs: {1}'.format(total_packets, total_duplicate_acks))
                 keep_receiving = False
                 break
             elif pack_type == 2:

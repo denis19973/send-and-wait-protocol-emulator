@@ -30,7 +30,7 @@ class Network:
                 packet = UDP_network.get_packet(sock)
                 print(packet)
                 total_packets += 1
-                print('Total packets: {}'.format(total_packets))
+                print('Total packets: {0}'.format(total_packets))
 
                 # if it's a control packet, let it go through.
                 if packet.get_packet_type() == 1 or packet.get_packet_type() == 4:
@@ -62,7 +62,7 @@ class Network:
     #  Prints all configuration for the Network Module.
     def print_configuration(self):
         print(
-            'Drop rate: {}, Avarage Delay per Packet: {}, Sender: {}, Receiver: {}'.format(self.configuration.drop_rate, \
+            'Drop rate: {0}, Avarage Delay per Packet: {1}, Sender: {2}, Receiver: {3}'.format(self.configuration.drop_rate, \
                                                                                            self.configuration.average_per_packet, \
                                                                                            (
                                                                                                self.configuration.sender_address,

@@ -67,10 +67,10 @@ class Packet():
         self.source_port = source_port
 
     def __str__(self):
-        info_string = '''Packet [packet type={}, seq num={},
-         window size={}, ack num={}, data={},
-        destination address={}, destination port={},
-        source address={}, source port={}]'''.format(self.packet_type, self.seq_num, self.window_size, self.ack_num,
+        info_string = '''Packet [packet type={0}, seq num={1},
+         window size={2}, ack num={3}, data={4},
+        destination address={5}, destination port={6},
+        source address={7}, source port={8}]'''.format(self.packet_type, self.seq_num, self.window_size, self.ack_num,
                                                      self.data, \
                                                      self.destination_address, self.destination_port,
                                                      self.source_address, self.source_port)
@@ -85,9 +85,9 @@ class Packet_Utilities():
         if packet_type == 1:
             packet.set_data('SOT')
         elif packet_type == 2:
-            packet.set_data('packet number: {}'.format(seq_num))
+            packet.set_data('packet number: {0}'.format(seq_num))
         elif packet_type == 3:
-            packet.set_data('ack num {}'.format(ack_num))
+            packet.set_data('ack num {0}'.format(ack_num))
         elif packet_type == 4:
             packet.set_data('EOT')
 

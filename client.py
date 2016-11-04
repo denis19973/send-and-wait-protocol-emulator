@@ -46,7 +46,7 @@ class Client(metaclass=ABCMeta):
 
     # Prints all configuration for the Client.
     def print_configuration(self):
-        print('Mode: {}, Network Emulator Address: {} : {}'.format(self.mode, self.configuration.network_address, \
+        print('Mode: {0}, Network Emulator Address: {1} : {2}'.format(self.mode, self.configuration.network_address, \
                                                                    self.configuration.network_port))
     # Return client's current mode (sender or receiver).
     def get_mode(self):
@@ -87,12 +87,12 @@ class Sender(Client):
                 if not self.waiting_for_acks:
                     # set timer and after it's over, check for ACK's.
                     self.set_timer_for_acks()
-                    print('Window status: {}'.format(len(self.packet_window)))
+                    print('Window status: {0}'.format(len(self.packet_window)))
 
             # windowSize number of more packets have been sent
             self.packets_sent += self.configuration.window_size
-            print('Sent packets {}'.format(self.packets_sent))
-            print('Ramainings packets {}'.format(self.configuration.window_size - self.packets_sent))
+            print('Sent packets {0}'.format(self.packets_sent))
+            print('Ramainings packets {0}'.format(self.configuration.window_size - self.packets_sent))
         # when all window packets sent, send EOT
         self.send_end_of_transmission()
 
