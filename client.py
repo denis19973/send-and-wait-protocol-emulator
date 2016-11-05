@@ -80,14 +80,14 @@ class Sender(Client):
             self.waiting_for_acks = True
             # set timer and after it's over, check for ACK's.
             # TODO set timer for ACKS's
-
+            self.set_timer_for_acks()
             # wait for ack's for each packet
             while len(self.packet_window) != 0:
                 # set a timer only if we are not already waiting..no point invoking it again and again
                 if not self.waiting_for_acks:
                     # set timer and after it's over, check for ACK's.
                     # TODO set timer for acks
-
+                    self.set_timer_for_acks()
                     print('Window status: {0}'.format(len(self.packet_window)))
 
             # windowSize number of more packets have been sent
@@ -150,14 +150,15 @@ class Sender(Client):
                 packet = self.packet_window[i]
                 self.send_packet(packet)
 
-            self.set_timer_for_acks()
+
 
     # TODO fix timer
     # Set timer and wait for ACKs.
     def set_timer_for_acks(self):
         self.timer = True
-        while self.timer:
-            # call ackTimeout and check which packets have been ACK'ed.
+
+        # call ackTimeout and check which packets have been ACK'ed.
+        if self.timer:
             self.ack_timeout()
             time.sleep(self.configuration.max_timeout)
 
@@ -167,7 +168,8 @@ class Sender(Client):
     def receive_acks(self):
 
         # can block for a maximum of 2 seconds
-        self.listen.settimeout(2)
+
+        self.listen.settimeout(10)
 
         # Scan while packet window size isn't 0. If 0, all packets have been ACK'ed.
         while len(self.packet_window) != 0 and self.waiting_for_acks:
@@ -175,6 +177,7 @@ class Sender(Client):
 
             # if an ACK received, log and remove from the window.
             if packet.get_packet_type() == 3:
+                print('** ACK got')
                 self.remove_packet_from_window(packet.get_ack_num())
 
     # Checks all packets in the current window and removes the one whose acknowledgement number is

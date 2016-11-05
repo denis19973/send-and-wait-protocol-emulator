@@ -40,6 +40,7 @@ class Receiver(Client):
                 # craft and send ACK packet
                 ack_packet = self.make_packet(3)
                 print('creating ack ...')
+                print(ack_packet)
                 self.send_packet(ack_packet)
                 print('ack send')
                 # if packet hasn't been ACK'ed before.
