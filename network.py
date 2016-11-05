@@ -43,12 +43,14 @@ class Network:
                     # if packet drop rate is lower than the threshold, drop it.
                     if self.get_drop_rate_threshold() <= self.configuration.drop_rate:
                         total_packets_dropped += 1
+                        print('packet dropped')
                     else:
 
                         # if packet drop rate is greater than the threshold, let it go through.
                         time.sleep(self.configuration.average_per_packet)
                         UDP_network.send_packet(sock, packet)
                         total_packets_forwarded += 1
+
 
 
         except KeyboardInterrupt:

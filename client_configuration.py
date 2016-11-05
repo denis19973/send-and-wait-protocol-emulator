@@ -5,6 +5,6 @@ transmitter_address = 'localhost'
 transmitter_port = 8887
 receiver_address = 'localhost'
 receiver_port = 8889
-max_packets_to_sent = 7
+max_packets_to_sent = 8
 window_size = 6
 max_timeout = 4

@@ -79,14 +79,15 @@ class Sender(Client):
             # we are now waiting for ack's.
             self.waiting_for_acks = True
             # set timer and after it's over, check for ACK's.
-            self.set_timer_for_acks()
+            # TODO set timer for ACKS's
 
             # wait for ack's for each packet
             while len(self.packet_window) != 0:
                 # set a timer only if we are not already waiting..no point invoking it again and again
                 if not self.waiting_for_acks:
                     # set timer and after it's over, check for ACK's.
-                    self.set_timer_for_acks()
+                    # TODO set timer for acks
+
                     print('Window status: {0}'.format(len(self.packet_window)))
 
             # windowSize number of more packets have been sent
@@ -102,7 +103,6 @@ class Sender(Client):
         packet = self.make_packet(1)
 
         # send the packet
-
         self.send_packet(packet)
 
         # wait for SOT packet from receiver
@@ -112,7 +112,6 @@ class Sender(Client):
             print('packet SOT got from receiver!')
 
 
-        print(receiver_response)
     # Send the packet to end the transmission.
     def send_end_of_transmission(self):
         # create an EOT packet.
