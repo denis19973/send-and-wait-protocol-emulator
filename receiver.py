@@ -37,8 +37,6 @@ class Receiver(Client):
             elif pack_type == 2:
                 # update current sequence number
                 self.current_seq_num = packet.seq_num
-                print('*********', packet.seq_num)
-                # craft and send ACK packet
                 ack_packet = self.make_packet(3)
 
                 self.send_packet(ack_packet)
@@ -52,8 +50,9 @@ class Receiver(Client):
                     total_duplicate_acks += 1
 
                 # add to list of ack'ed packets
-                self.asked_packets.append(packet)
-                print(self.asked_packets)
+
+        self.asked_packets.append(packet)
+        print(self.asked_packets)
 
 
 

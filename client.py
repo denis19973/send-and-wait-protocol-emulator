@@ -172,7 +172,7 @@ class Sender(Client):
 
         # can block for a maximum of 2 seconds
 
-        self.listen.settimeout(2)
+        self.listen.settimeout(15)
 
         # Scan while packet window size isn't 0. If 0, all packets have been ACK'ed.
         while len(self.packet_window) != 0 and self.waiting_for_acks:
