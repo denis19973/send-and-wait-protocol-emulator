@@ -1,12 +1,13 @@
 from pickle import *
 
+
 class Packet():
     def __init__(self):
         self.packet_type = 0
         self.seq_num = 0
         self.window_size = 0
         self.ack_num = 0
-        self.data =''
+        self.data = ''
         self.destination_address = ''
         self.destination_port = 0
         self.source_address = ''
@@ -71,9 +72,9 @@ class Packet():
          window size={2}, ack num={3}, data={4},
         destination address={5}, destination port={6},
         source address={7}, source port={8}]'''.format(self.packet_type, self.seq_num, self.window_size, self.ack_num,
-                                                     self.data, \
-                                                     self.destination_address, self.destination_port,
-                                                     self.source_address, self.source_port)
+                                                       self.data, \
+                                                       self.destination_address, self.destination_port,
+                                                       self.source_address, self.source_port)
         return info_string
 
 

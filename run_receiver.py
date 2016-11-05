@@ -10,4 +10,3 @@ try:
     receiver.run()
 except KeyboardInterrupt:
     print('Receiver stopped')
-

@@ -2,11 +2,11 @@ import pickle
 import random
 import socket
 import time
+
 from udp_network import *
 
 
 class Network:
-
     # configuration for the network module
     def __init__(self, network_configuration):
         self.configuration = network_configuration
@@ -35,7 +35,8 @@ class Network:
                 # if it's a control packet, let it go through.
                 if packet.get_packet_type() == 1 or packet.get_packet_type() == 4:
                     print(packet.get_destination_address(), packet.get_destination_port())
-                    UDP_network.send_packet(sock, packet, packet.get_destination_address(), packet.get_destination_port())
+                    UDP_network.send_packet(sock, packet, packet.get_destination_address(),
+                                            packet.get_destination_port())
                     total_packets_forwarded += 1
 
                 else:
@@ -52,7 +53,6 @@ class Network:
                         total_packets_forwarded += 1
 
 
-
         except KeyboardInterrupt:
             print('server stoped.')
 
@@ -61,14 +61,16 @@ class Network:
     def get_drop_rate_threshold(self):
         thresold = random.randint(0, ((100 - 1) + 1) + 1)
         return thresold
+
     #  Prints all configuration for the Network Module.
     def print_configuration(self):
         print(
-            'Drop rate: {0}, Avarage Delay per Packet: {1}, Sender: {2}, Receiver: {3}'.format(self.configuration.drop_rate, \
-                                                                                           self.configuration.average_per_packet, \
-                                                                                           (
-                                                                                               self.configuration.sender_address,
-                                                                                               self.configuration.sender_port), \
-                                                                                           (
-                                                                                               self.configuration.receiver_address, \
-                                                                                               self.configuration.receiver_port)))
+            'Drop rate: {0}, Avarage Delay per Packet: {1}, Sender: {2}, Receiver: {3}'.format(
+                self.configuration.drop_rate, \
+                self.configuration.average_per_packet, \
+                (
+                    self.configuration.sender_address,
+                    self.configuration.sender_port), \
+                (
+                    self.configuration.receiver_address, \
+                    self.configuration.receiver_port)))

@@ -8,11 +8,13 @@ class UDP_network:
     # Creates a UDP Socket that listens on a specified port.
     def create_server(port):
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        sock.bind(('',port))
+        sock.bind(('', port))
         return sock
+
     # # Creates a UDP Socket that listens on a specified port.
     def create_socket():
         return socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
     # Read a Packet from the UDP socket.
     def get_packet(socket):
         byte_data = socket.recv(1024)

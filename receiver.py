@@ -31,7 +31,8 @@ class Receiver(Client):
 
             if pack_type == 4:
                 # listen for EOT
-                print('Total packets received: {0}, Total duplicate ACKs: {1}'.format(total_packets, total_duplicate_acks))
+                print('Total packets received: {0}, Total duplicate ACKs: {1}'.format(total_packets,
+                                                                                      total_duplicate_acks))
                 self.keep_receiving = False
                 break
             elif pack_type == 2:
@@ -41,7 +42,6 @@ class Receiver(Client):
 
                 self.send_packet(ack_packet)
                 print('** Ack packet sended')
-                print(ack_packet)
                 # if packet hasn't been ACK'ed before.
                 if not self.find_if_packed_acked(packet.seq_num):
                     total_packets += 1
@@ -49,13 +49,9 @@ class Receiver(Client):
                     # ACKing again - earlier ACK probably got lost
                     total_duplicate_acks += 1
 
-                # add to list of ack'ed packets
+                    # add to list of ack'ed packets
 
         self.asked_packets.append(packet)
-        print(self.asked_packets)
-
-
-
 
     # Find if the current packet has ever been ack'ed before.
     def find_if_packed_acked(self, seq_num):
