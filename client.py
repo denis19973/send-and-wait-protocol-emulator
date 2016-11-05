@@ -87,7 +87,7 @@ class Sender(Client):
                 if not self.waiting_for_acks:
                     # set timer and after it's over, check for ACK's.
                     self.set_timer_for_acks()
-                    print('Window status: {0}'.format(len(self.packet_window)))
+                    print('** Window status: {0}'.format(len(self.packet_window)))
 
             # windowSize number of more packets have been sent
             self.packets_sent += self.configuration.window_size
@@ -116,6 +116,7 @@ class Sender(Client):
         packet = self.make_packet(4)
         # send the packet
         self.send_packet(packet)
+        print('** EOT sended')
 
     def make_packet(self, packet_type):
         return models.Packet_Utilities.make_packet(self.configuration.receiver_address, \
@@ -164,24 +165,32 @@ class Sender(Client):
 
         # can block for a maximum of 2 seconds
 
-        self.listen.settimeout(15)
+        try:
+            self.listen.settimeout(10)
 
-        # Scan while packet window size isn't 0. If 0, all packets have been ACK'ed.
-        while len(self.packet_window) != 0 and self.waiting_for_acks:
-            print('** waiting for ACK...')
-            packet = UDP_network.get_packet(self.listen)
+            # Scan while packet window size isn't 0. If 0, all packets have been ACK'ed.
+            while len(self.packet_window) != 0 and self.waiting_for_acks:
+                print('** waiting for ACK...')
+                packet = UDP_network.get_packet(self.listen)
 
-            # if an ACK received, log and remove from the window.
-            if packet.get_packet_type() == 3:
-                print('** ACK got')
-                self.remove_packet_from_window(packet.get_ack_num())
+                # if an ACK received, log and remove from the window.
+                if packet.get_packet_type() == 3:
+                    print('** ACK got')
+                    self.remove_packet_from_window(packet.ack_num)
+
+        except socket.timeout:
+            print('Timed out')
 
     # Checks all packets in the current window and removes the one whose acknowledgement number is
     # equal to the ACK number of the received packet.
     def remove_packet_from_window(self, ack_num):
-        for i in range(0, len(self.packet_window)):
-            if self.packet_window[i].get_ack_num == ack_num:
-                self.packet_window.pop(i)
+        try:
+            for i in range(len(self.packet_window)):
+                if self.packet_window[i].ack_num == ack_num:
+                    self.packet_window.pop(i)
+
+        except IndexError:
+            pass
 
     # Stop the timer.
     def stop_timer_and_receive(self):

@@ -68,7 +68,7 @@ class Packet():
         self.source_port = source_port
 
     def __str__(self):
-        info_string = '''Packet [packet type={0}, seq num={1},
+        info_string = '''** Packet [packet type={0}, seq num={1},
          window size={2}, ack num={3}, data={4},
         destination address={5}, destination port={6},
         source address={7}, source port={8}]'''.format(self.packet_type, self.seq_num, self.window_size, self.ack_num,
