@@ -61,7 +61,7 @@ class Sender(Client):
     # Create a client, whose sole purpose is to send (transmit) to the receiver.
     def __init__(self, mode):
         Client.__init__(self, mode)
-        self.seq_num = 1
+        self.seq_num = 0
         self.packet_window = []
 
     def run(self):
@@ -109,7 +109,7 @@ class Sender(Client):
         receiver_response = UDP_network.get_packet(self.listen)
 
         if receiver_response.get_packet_type() == 1:
-            print('packet SOT got from receiver!')
+            print('** packet SOT got from receiver!')
 
 
     # Send the packet to end the transmission.
@@ -152,6 +152,8 @@ class Sender(Client):
 
 
 
+
+
     # TODO fix timer
     # Set timer and wait for ACKs.
     def set_timer_for_acks(self):
@@ -159,8 +161,9 @@ class Sender(Client):
 
         # call ackTimeout and check which packets have been ACK'ed.
         if self.timer:
-            self.ack_timeout()
             time.sleep(self.configuration.max_timeout)
+            self.ack_timeout()
+
 
         self.receive_acks()
 
@@ -169,11 +172,13 @@ class Sender(Client):
 
         # can block for a maximum of 2 seconds
 
-        self.listen.settimeout(10)
+        self.listen.settimeout(2)
 
         # Scan while packet window size isn't 0. If 0, all packets have been ACK'ed.
         while len(self.packet_window) != 0 and self.waiting_for_acks:
+            print('start of waiting ack')
             packet = UDP_network.get_packet(self.listen)
+            print('END waiting')
 
             # if an ACK received, log and remove from the window.
             if packet.get_packet_type() == 3:

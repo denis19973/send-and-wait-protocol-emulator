@@ -25,6 +25,7 @@ class Receiver(Client):
         while self.keep_receiving:
             # scan each packet
             packet = UDP_network.get_packet(self.listen)
+            print('** DATA packet got:')
             print(packet)
             pack_type = packet.get_packet_type()
 
@@ -35,16 +36,16 @@ class Receiver(Client):
                 break
             elif pack_type == 2:
                 # update current sequence number
-                self.current_seq_num = packet.get_seq_num()
-
+                self.current_seq_num = packet.seq_num
+                print('*********', packet.seq_num)
                 # craft and send ACK packet
                 ack_packet = self.make_packet(3)
-                print('creating ack ...')
-                print(ack_packet)
+
                 self.send_packet(ack_packet)
-                print('ack send')
+                print('** Ack packet sended')
+                print(ack_packet)
                 # if packet hasn't been ACK'ed before.
-                if not self.find_if_packed_acked(packet.get_seq_num()):
+                if not self.find_if_packed_acked(packet.seq_num):
                     total_packets += 1
                 else:
                     # ACKing again - earlier ACK probably got lost
@@ -52,11 +53,15 @@ class Receiver(Client):
 
                 # add to list of ack'ed packets
                 self.asked_packets.append(packet)
-                break
+                print(self.asked_packets)
+
+
+
+
     # Find if the current packet has ever been ack'ed before.
     def find_if_packed_acked(self, seq_num):
         for i in range(0, len(self.asked_packets)):
-            if self.asked_packets[i].get_seq_num() == seq_num:
+            if self.asked_packets[i].seq_num == seq_num:
                 return True
 
         return False
@@ -65,12 +70,10 @@ class Receiver(Client):
     def wait_for_sot(self):
         sot_packet = UDP_network.get_packet(self.listen)
 
-
-
         if sot_packet.get_packet_type() == 1:
 
             # send SOT back to signify receive.
-            print('SOT from sender got')
+            print('** SOT from sender got')
             packet = self.make_packet(1)
             self.send_packet(packet)
 

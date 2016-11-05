@@ -25,6 +25,5 @@ class UDP_network:
             byte_packet = pickle.dumps(packet)
             socket.sendto(byte_packet, (destination_address, destination_port))
         else:
-            print('True from UDP')
             byte_packet = pickle.dumps(packet)
             socket.sendto(byte_packet, (packet.get_destination_address(), packet.get_destination_port()))
